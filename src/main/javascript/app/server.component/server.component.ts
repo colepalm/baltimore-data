@@ -15,8 +15,14 @@ export class ServerComponent implements OnInit {
     private errorMessage: string;
 
     ngOnInit() {
-        return this.serverService.getGrocery()
-            .subscribe(number => this.number = number, error => this.errorMessage = <any>error);
+        let ctrl = this;
+        return ctrl.serverService.getGrocery()
+            .subscribe(function(number) {
+                ctrl.number = number;
+                console.log(number)
+            }, function(error) {
+                ctrl.errorMessage = <any>error
+            });
     }
     
 }

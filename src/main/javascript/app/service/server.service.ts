@@ -8,12 +8,14 @@ export class ServerService {
     constructor(private http: Http) {}
 
     private Server = {
-        GETGrocery: '/grocery'
+        GETGrocery: '/api/grocery'
     };
 
     getGrocery(): Observable<number> {
         return this.http.get(this.Server.GETGrocery)
-            .map(res => <number> res.json())
+            .map(function(res) {
+                <number> res.json()
+            })
             .catch(error => Observable.throw(error.json().error || 'Server error'))
     }
 

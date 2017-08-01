@@ -17,12 +17,6 @@ public class BaltimoreData {
         return new ModelAndView("forward:/");
     }
 
-    @RequestMapping(value = "/grocery")
-    public Integer getGroceryStores()
-    {
-        return 20;
-    }
-
 	public static void main(String[] args) {
 		SpringApplication.run(BaltimoreData.class, args);
 	}
