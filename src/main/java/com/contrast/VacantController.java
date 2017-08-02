@@ -2,7 +2,6 @@ package com.contrast;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -48,8 +47,8 @@ public class VacantController {
     }
 
     private class VacantRow {
-        String referenceId;
-        String neighborhood;
+        public String referenceId;
+        public String neighborhood;
 
         VacantRow(String referenceId, String neighborhood) {
             this.referenceId = referenceId;

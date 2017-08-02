@@ -2,7 +2,6 @@ package com.contrast;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -41,19 +40,20 @@ public class GroceryController {
             String name = jsonobject.getString("name");
             String neighborhood = jsonobject.getString("neighborhood");
 
-            GroceryRow toAdd = new GroceryRow();
-            toAdd.name = name;
-            toAdd.neighborhood = neighborhood;
-
-            groceryData.add(toAdd);
+            groceryData.add(new GroceryRow(name, neighborhood));
         }
 
         return groceryData;
     }
 
     private class GroceryRow {
-        String name;
-        String neighborhood;
+        public String name;
+        public String neighborhood;
+
+        GroceryRow(String name, String neighborhood) {
+            this.name = name;
+            this.neighborhood = neighborhood;
+        }
     }
 
 }
