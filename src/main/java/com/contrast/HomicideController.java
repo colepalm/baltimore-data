@@ -11,23 +11,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/grocery")
-public class GroceryController {
+@RequestMapping("/api/homicide")
+public class HomicideController {
 
     public String data;
 
-    GroceryController() throws IOException {
+    HomicideController() throws IOException {
         ExternalData fromAPI = new ExternalData();
-        data = fromAPI.getExternalData("https://data.baltimorecity.gov/resource/8gms-s9we.json");
+        data = fromAPI.getExternalData("https://data.baltimorecity.gov/resource/9h5s-7d88.json");
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<GroceryRow> getGroceryStores() throws Exception {
-        List<GroceryRow> groceryData = new ArrayList<>();
+    public HashMap<String, Integer> getHomicides() throws Exception {
+        List<DataRow> homicideData = new ArrayList<>();
+        DataProcess dataProcess = new DataProcess();
 
         JsonFactory f = new JsonFactory();
         JsonParser jp = f.createJsonParser(data);
@@ -37,23 +39,12 @@ public class GroceryController {
 
         for (int i = 0; i < jsonarray.length(); i++) {
             JSONObject jsonobject = jsonarray.getJSONObject(i);
-            String name = jsonobject.getString("name");
+            String name = jsonobject.getString("crimedate");
             String neighborhood = jsonobject.getString("neighborhood");
 
-            groceryData.add(new GroceryRow(name, neighborhood));
+            homicideData.add(new DataRow(name, neighborhood));
         }
 
-        return groceryData;
+        return dataProcess.process(homicideData);
     }
-
-    private class GroceryRow {
-        public String name;
-        public String neighborhood;
-
-        GroceryRow(String name, String neighborhood) {
-            this.name = name;
-            this.neighborhood = neighborhood;
-        }
-    }
-
 }

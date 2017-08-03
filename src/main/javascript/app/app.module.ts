@@ -1,14 +1,19 @@
 import {NgModule}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
+import { FusionChartsModule } from 'angular2-fusioncharts';
+
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+
 import {AppComponent} from "./app.component/app.component";
 import {NotFoundComponent} from "./404.component/404.component";
+import {PieChartComponent} from "./pieChart.component/PieChart.component";
 
 
 import {FormsModule} from "@angular/forms";
 import {RouterModule, Routes} from "@angular/router";
 import {JsonpModule, HttpModule} from "@angular/http";
-import {pieChartComponent} from "./pieChart.component/pieChart.component";
 
 const appRoutes: Routes = [
     {path: '',          redirectTo: '/', pathMatch: 'full'},
@@ -22,10 +27,12 @@ const appRoutes: Routes = [
         FormsModule,
         HttpModule,
         JsonpModule,
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes),
+        FusionChartsModule.forRoot(FusionCharts, Charts),
     ],
     declarations: [
         AppComponent,
+        PieChartComponent,
         NotFoundComponent
     ],
     bootstrap: [AppComponent]

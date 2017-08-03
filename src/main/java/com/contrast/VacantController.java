@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -26,8 +27,9 @@ public class VacantController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<VacantRow> getVacantData() throws Exception {
-        List<VacantRow> vacancyData = new ArrayList<>();
+    public HashMap<String, Integer> getVacantData() throws Exception {
+        List<DataRow> vacancyData = new ArrayList<>();
+        DataProcess dataProcess = new DataProcess();
 
         JsonFactory f = new JsonFactory();
         JsonParser jp = f.createJsonParser(data);
@@ -40,20 +42,9 @@ public class VacantController {
             String referenceId = jsonobject.getString("referenceid");
             String neighborhood = jsonobject.getString("neighborhood");
 
-            vacancyData.add(new VacantRow(referenceId, neighborhood));
+            vacancyData.add(new DataRow(referenceId, neighborhood));
         }
 
-        return vacancyData;
+        return dataProcess.process(vacancyData);
     }
-
-    private class VacantRow {
-        public String referenceId;
-        public String neighborhood;
-
-        VacantRow(String referenceId, String neighborhood) {
-            this.referenceId = referenceId;
-            this.neighborhood = neighborhood;
-        }
-    }
-
 }

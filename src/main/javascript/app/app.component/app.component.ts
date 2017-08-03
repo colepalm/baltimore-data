@@ -1,12 +1,18 @@
 import {Component} from '@angular/core';
 import {HttpModule, Http} from '@angular/http';
 
-export interface groceryStoreList {
+export interface homicideList {
     stores: [{
         name: string;
         neighborhood: string;
     }]
 }
+
+export interface vacancyList {
+    referenceId: string;
+    neighborhood: string;
+}
+
 @Component({
     selector: 'app',
     templateUrl: 'app/app.component/app.component.html',
@@ -18,15 +24,22 @@ export class AppComponent {
 
     }
 
-    private storeData: groceryStoreList;
+    private storeData: homicideList;
+    private vacancyData: vacancyList;
     private errorMessage: string;
 
     ngOnInit() {
         let ctrl = this;
 
-        ctrl.http.get('/api/grocery')
+        ctrl.http.get('/api/homicide')
             .subscribe((response: any) => {
-                response.statusText === 'OK' ? ctrl.storeData = response._body : ctrl.errorMessage = response._body
-            })
+                response.statusText === 'OK' ? ctrl.storeData = JSON.parse(response._body) : ctrl.errorMessage = response._body;
+            });
+
+        ctrl.http.get('/api/vacant')
+            .subscribe((response: any) => {
+                response.statusText === 'OK' ? ctrl.vacancyData = JSON.parse(response._body) : ctrl.errorMessage = response._body
+            });
+
     }
 }
